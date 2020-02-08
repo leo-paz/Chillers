@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 
-const UserDashboardScreen = () => {
+const SettingScreen = () => {
   return(
     <View>
-      <Text>DashboardScreen</Text>
+      <Text>SettingScreen</Text>
     </View>
   );
 };
 
-export default UserDashboardScreen;
+export default SettingScreen;
