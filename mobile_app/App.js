@@ -1,19 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import {
+  createAppContainer,
+  createSwitchNavigator,
+  createBottomTabNavigator
+} from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>{"{Sick App Goes Here}"}</Text>
-    </View>
-  );
-}
+import SignInScreen from "./src/screens/SignInScreen";
+
+const SignInFlow = createSwitchNavigator({
+  SignedIn: SignInScreen
+});
+
+const App = createAppContainer(SignInFlow);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
+
+export default function() {
+  return <App />;
+}
