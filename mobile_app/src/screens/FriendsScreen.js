@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, SafeAreaView , TouchableOpacity } from "react-native";
 
 const FriendsScreen = () => {
   return(
-    <View>
+    <SafeAreaView>
       <Text>FriendsScreen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
