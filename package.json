@@ -1,0 +1,29 @@
+{
+  "name": "express_api_template",
+  "version": "1.0.0",
+  "description": "express api template with express boilerplate to get started.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmb186/express_api_template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmb186/express_api_template/issues"
+  },
+  "homepage": "https://github.com/mmb186/express_api_template#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.1",
+    "nodemon": "^2.0.2"
+  }
+}
