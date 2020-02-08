@@ -6,4 +6,5 @@ const Package =  {
     commisionValue: 4543543,
     weight: 123,
     size: 45 * 45, //length
+    delivery_status: 'inTransit || Chillers/Depo || pickedUP'
 }
