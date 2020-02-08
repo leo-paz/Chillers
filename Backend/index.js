@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3001;
 console.log(process.env.DB_USERNAME);
 
 const authRoutes = require('./src/routes/authRoutes');
+const packageRoutes = require('./src/routes/packageRoutes');
 const requireAuth = require('./src/middlewares/requireAuth');
 
 const app = express();
@@ -17,6 +18,7 @@ const app = express();
 // passes request to bodyparser, then authRoutes.
 app.use(bodyParser.json());
 app.use(authRoutes);
+app.use(packageRoutes);
 
 const dbUsername = process.env.DB_USERNAME || 'admin'; //process.env.dbUsername || 'admin';
 const dbPassword = process.env.DB_PASSWORD || 'password'; // process.env.dbPassword || 'password';
