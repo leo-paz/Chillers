@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
+import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from "react-navigation-stack";
 
 import SignInScreen from "./src/screens/SignInScreen";
@@ -12,7 +13,15 @@ import FriendsScreen from "./src/screens/FriendsScreen";
 
 const AppFlow = createBottomTabNavigator({
   Dashboard: UserDashboardScreen,
-  Setting: SettingScreen,
+  Setting: {
+    screen: SettingScreen,
+    navigationOptions: {
+      tabBarLabel:"Home",
+      tabBarIcon: ({ tintColor }) => (
+        <Ionicons name="md-checkmark-circle" size={20}/>
+      )
+    }
+  },
   Friends: FriendsScreen
 });
 
