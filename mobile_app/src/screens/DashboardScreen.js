@@ -86,35 +86,40 @@ const UserDashboardScreen = () => {
       justifyContent: "center",
       padding: 10
     }
-  };
+  }
+  let packages;
+
+  
 
   return (
     <SafeAreaView>
       <View style={styles.centeredView}>
-        <ToggleSwitch
-          isOn={isChillerMode}
-          onColor="#004A8E"
-          offColor="#D3200D"
-          label="In Chiller Mode"
-          labelStyle={{ color: "black", fontWeight: "900" }}
-          size="large"
-          onToggle={e => setChillerMode(!isChillerMode)}
-        />
+      <ToggleSwitch
+        isOn={isChillerMode}
+        onColor="#004A8E"
+        offColor="#D3200D"
+        label="In Chiller Mode"
+        labelStyle={{ color: "black", fontWeight: "900" }}
+        size="large"
+        onToggle={e => setChillerMode(!isChillerMode)}
+      />
       </View>
       <ScrollView>
-        <Overlay
-          //width={Math.round(Dimensions.get('window').height) - 100}
-          height={Math.round(Dimensions.get("window").width) - 100}
-          isVisible={isVisible}
-          onBackdropPress={e => setVisibility(false)}
-        >
-          <PackageModal
-            address={list[selectedIdx].address} //{list[selectedIdx].address}
-            name={list[selectedIdx].name} //{list[selectedIdx].name}
-            status={list[selectedIdx].status} //{list[selectedIdx].status}
-          />
-        </Overlay>
-        {list.map((l, i) => (
+
+      <Overlay
+        //width={Math.round(Dimensions.get('window').height) - 100}
+        //height={Math.round(Dimensions.get('window').width) - 100}
+        isVisible={isVisible}
+        onBackdropPress={e => setVisibility(false)}>
+        <PackageModal 
+          address={list[selectedIdx].address} //{list[selectedIdx].address}
+          name = {list[selectedIdx].name} //{list[selectedIdx].name}
+          status = {list[selectedIdx].status} //{list[selectedIdx].status}
+          isChillerMode = {isChillerMode}
+        />
+      </Overlay> 
+      {
+        list.map((l, i) => (
           <ListItem
             color="#2EE0F5"
             key={i}
