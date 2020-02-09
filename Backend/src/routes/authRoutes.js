@@ -8,6 +8,10 @@ const router = express.Router();
 
 router.post('/tt', async (req, res) => {
   return  res.send('TEST') ;
+});
+
+router.get('/tt', async (req, res) => {
+  return res.send('TEkjh;khkjhST');
 })
 
 router.post('/signup', async (req, res) => {
