@@ -9,22 +9,20 @@ import {
   ScrollView,
   Dimensions
 } from "react-native";
-import { ListItem, Overlay } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
-import PackageModal from './PackageModal';
-import ToggleSwitch from 'toggle-switch-react-native';
+import { ListItem, Overlay } from "react-native-elements";
+import { FontAwesome } from "@expo/vector-icons";
+import PackageModal from "./PackageModal";
+import ToggleSwitch from "toggle-switch-react-native";
 
-const getPackageStatusColour = (status) => {
-  if (status === 'Delivered') {
-    return '#48E659';
+const getPackageStatusColour = status => {
+  if (status === "Delivered") {
+    return "#48E659";
+  } else if (status === "At Chillers") {
+    return "#EFED59";
+  } else if (status === "In Transit") {
+    return "#EF5959";
   }
-  else if (status === 'At Chillers') {
-    return '#EFED59';
-  }
-  else if (status === 'In Transit'){
-    return '#EF5959';
-  }
-}
+};
 
 const UserDashboardScreen = () => {
   const [isVisible, setVisibility] = useState(false);
@@ -32,60 +30,60 @@ const UserDashboardScreen = () => {
   const [isChillerMode, setChillerMode] = useState(false);
   const list = [
     {
-      name: 'Amy Farha',
-      address: '46 Coolspring Crescent',
-      status: 'Delivered'
+      name: "Amy Farha",
+      address: "46 Coolspring Crescent",
+      status: "Delivered"
     },
     {
-      name: 'Chris Jackson',
-      address: '3060 Uplands Drive',
-      status: 'In Transit'
+      name: "Chris Jackson",
+      address: "3060 Uplands Drive",
+      status: "In Transit"
     },
     {
-      name: 'Moe Jackson',
-      address: '1 Hines Road',
-      status: 'At Chillers'
+      name: "Moe Jackson",
+      address: "1 Hines Road",
+      status: "At Chillers"
     },
     {
-      name: 'Ian Burner',
-      address: '23 Sussex Drive',
-      status: 'Delivered'
+      name: "Ian Burner",
+      address: "23 Sussex Drive",
+      status: "Delivered"
     },
     {
-      name: 'Amy Farha',
-      address: '46 Coolspring Crescent',
-      status: 'Delivered'
+      name: "Amy Farha",
+      address: "46 Coolspring Crescent",
+      status: "Delivered"
     },
     {
-      name: 'Chris Jackson',
-      address: '3060 Uplands Drive',
-      status: 'In Transit'
+      name: "Chris Jackson",
+      address: "3060 Uplands Drive",
+      status: "In Transit"
     },
     {
-      name: 'Moe Jackson',
-      address: '1 Hines Road',
-      status: 'At Chillers'
+      name: "Moe Jackson",
+      address: "1 Hines Road",
+      status: "At Chillers"
     },
     {
-      name: 'Ian Burner',
-      address: '23 Sussex Drive',
-      status: 'Delivered'
-    },
+      name: "Ian Burner",
+      address: "23 Sussex Drive",
+      status: "Delivered"
+    }
   ];
-  
+
   const styles = {
     addIcon: {
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       width: 60,
       height: 60,
-      borderRadius: 150/2,
-      backgroundColor: '#000000',
+      borderRadius: 150 / 2,
+      backgroundColor: "#000000",
       margin: 20
     },
     centeredView: {
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       padding: 10
     }
   }
@@ -129,11 +127,19 @@ const UserDashboardScreen = () => {
             subtitle={l.address}
             bottomDivider
             topDivider
-            rightIcon={<FontAwesome name="circle" color={getPackageStatusColour(l.status)} size={32}/>}
-            onLongPress={e => {setVisibility(true); setSelectedIdx(i);}}
+            rightIcon={
+              <FontAwesome
+                name="circle"
+                color={getPackageStatusColour(l.status)}
+                size={32}
+              />
+            }
+            onLongPress={e => {
+              setVisibility(true);
+              setSelectedIdx(i);
+            }}
           />
-        ))
-      }
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
