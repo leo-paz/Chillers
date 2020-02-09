@@ -40,6 +40,16 @@ module.exports = {
     return resp;
   },
 
+  getPackagesFromProfile: async (userId) => {
+    let packages;
+    let getDoc = await usersRef.doc(userId).get()
+      .then(doc => {
+        packages = doc.data().packages;
+      })
+    return packages;
+  },
+  
+
   packageDelivered: async (id) => {
     packageRef.doc(id).update({
       "deliveryStatus": "Delivered"
@@ -60,6 +70,12 @@ module.exports = {
     });
   },
 
+  removePackageFromProfile: async (userId, packId) => {
+    usersRef.doc(userId).update({
+      packages: admin.firestore.FieldValue.arrayRemove(packId)
+    });
+  },
+
   setChiller: async (id) => {
     usersRef.doc(id).update({
       "isChiller": true
@@ -74,60 +90,22 @@ module.exports = {
     return;
   },
   
+  addFriend: async (user, friend) => {
+    usersRef.doc(user).update({
+      friends: admin.firestore.FieldPath.arrayUnion(friend)
+    });
+  },
+
+  removeFriend: async (user, friend) => {
+    usersRef.doc(user).update({
+      friends: admin.firestore.FieldValue.arrayRemove(friend)
+    });
+  },
+  // updateAddress: async (id, address) => {
+  //   usersRef.doc(id).update({
+  //     "address": address
+  //   });
+  //   return;
+  // },
 
 };
-
-
-
-//TODO: var barcondScan = event()
-// function getData(barcodeScan){
-// function getUserByName(){
-//   let query = usersRef.where('name', '==', 'Andrew');
-//   query.get()
-//     .then(snapshot => {
-//       if (snapshot.empty) {
-//         console.log('No matching users.');
-//         return;
-//       }
-//       snapshot.forEach(doc => {
-//         console.log(doc.id, '=>', doc.data());
-//       });
-//     })
-//     .catch(err => {
-//       console.log('Error getting documents', err);
-//     });
-//   }
-
-
-// function setChiller(name){
-//   usersRef.doc(name).update({
-//     "isChiller": true
-//   })
-// }
-
-// function setNotChiller(name) {
-//   usersRef.doc(name).update({
-//     "isChiller": false
-//   })
-// }
-
-
-
-// //TODO: ID input
-// function getPackageById() {
-//   let query = packageRef.where('ID', '==', '0');
-//   query.get()
-//     .then(snapshot => {
-//       if (snapshot.empty) {
-//         console.log('No matching packages.');
-//         return;
-//       }
-//       snapshot.forEach(doc => {
-//         console.log(doc.id, '=>', doc.data());
-//       });
-//     })
-//     .catch(err => {
-//       console.log('Error getting documents', err);
-//     });
-// }
-
