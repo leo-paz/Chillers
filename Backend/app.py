@@ -19,16 +19,13 @@ firebase_storage_bucket=os.getenv('firebase_storage_bucket')
 
 
 def get_user(id):
-    r = requests.get(f'https://uottawahack3.firebaseio.com/Locations.json?orderBy="id"&equalTo="{id}"').json()
+    r = requests.get('https://uottawahack3.firebaseio.com/Locations.json?orderBy="id"&equalTo="{}"'.format(id)).json()
     return list(r.values())[0]
 
 
 def calc_road_dist(user1, user2):
-    r = requests.get(f'https://maps.googleapis.com/maps/api/distancematrix/json?' \
-                     f'units=metric&' \
-                     f'origins={str(user1["address"])}&' \
-                     f'destinations={str(user2["address"])}&' \
-                     f'key={maps_api_key}').json()
+    r = requests.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins={}&destinations={}&key={}'
+                     .format(str(user1['address']), str(user2['address']), maps_api_key)).json()
         
     return r['rows'][0]['elements'][0]
 
