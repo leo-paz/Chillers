@@ -6,6 +6,13 @@ import { SafeAreaView } from "react-navigation";
 import { FontAwesome } from '@expo/vector-icons';
 
 const FriendsScreen = () => {
+  useEffect(() => {
+    fetch(`https://randomuser.me/api/user/01`)
+          .then(results => results.json())
+          .then(data => {
+            setPackages(data);
+          });
+  })
   const friends = [
     {
       name: 'Amy Farha',

@@ -18,7 +18,7 @@ const getPackageStatusColour = (status) => {
   if (status === 'Delivered') {
     return '#48E659';
   }
-  else if (status === 'At Chillers') {
+  else if (status === 'At PackageHub') {
     return '#EFED59';
   }
   else if (status === 'In Transit'){
@@ -26,10 +26,23 @@ const getPackageStatusColour = (status) => {
   }
 }
 
-const UserDashboardScreen = () => {
+
+
+const UserDashboardScreen = (props) => {
   const [isVisible, setVisibility] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [isChillerMode, setChillerMode] = useState(false);
+
+  const [packages, setPackages] = useState([]);
+  useEffect(() => {
+    if (!isChillerMode) {
+      fetch(`https://randomuser.me/api/user/${props.userId}/packages`)
+          .then(results => results.json())
+          .then(data => {
+            setPackages(data);
+          });
+    }
+  })
   const list = [
     {
       name: 'Amy Farha',
@@ -44,7 +57,7 @@ const UserDashboardScreen = () => {
     {
       name: 'Moe Jackson',
       address: '1 Hines Road',
-      status: 'At Chillers'
+      status: 'At PackageHub'
     },
     {
       name: 'Ian Burner',
@@ -64,7 +77,7 @@ const UserDashboardScreen = () => {
     {
       name: 'Moe Jackson',
       address: '1 Hines Road',
-      status: 'At Chillers'
+      status: 'At PackageHub'
     },
     {
       name: 'Ian Burner',
@@ -89,7 +102,7 @@ const UserDashboardScreen = () => {
       padding: 10
     }
   }
-  let packages;
+  
 
   
 
@@ -129,6 +142,7 @@ const UserDashboardScreen = () => {
             subtitle={l.address}
             bottomDivider
             topDivider
+            rightSubtitle={l.status}
             rightIcon={<FontAwesome name="circle" color={getPackageStatusColour(l.status)} size={32}/>}
             onLongPress={e => {setVisibility(true); setSelectedIdx(i);}}
           />

@@ -41,25 +41,30 @@ const handleAddressChange = index => {
 
 
 const PackageModal = ({name, address, status, isChillerMode}) => {
-    const butStyle = StyleSheet.create({
-        buttonStyle: {
-            color: 'red',
-            marginTop: 10,
-            backgroundColor: 'blue'
-        }
-    })
+    useEffect(() => {
+      fetch('https://randomuser.me/api/')
+      .then(results => results.json())
+      .then(data => {
+        const {name} = data.results[0];
+        setFirstName(name.first);
+        setLastName(name.last);
+      });
+    });
 
     const viewStyles = StyleSheet.create ({
       centeredView: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
       }
     });
     
     const styles = StyleSheet.create({
         yellowTitle: {
           ...human.title3Object,
-          color: iOSColors.red,
+          color: iOSColors.black,
+          textAlign: 'center',
+          justifyContent: 'center',
         }
       });
     handleGetDirections = () => {
@@ -125,7 +130,7 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
               //containerStyle={{alignItems: 'center', justifyContent: 'center'}}
               titleStyle={{ fontWeight: 'bold' }}
             />}
-            subtitle={<Text style={{ fontWeight: 'bold'}}>{l.address}</Text>}
+            subtitle={<Text style={{ fontWeight: 'bold', textAlign: 'center'}}>{l.address}</Text>}
             onPress={e => {handleAddressChange(i)}}
           />
         ))
@@ -165,7 +170,6 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
         button = <Text></Text>
         mapButton = <Text></Text>
     }
-    
     
     return (
         //TODO: ADD PACKAGE INFO IN PROPS AND DISPLAY PACKAGE INFO IN TEXT
