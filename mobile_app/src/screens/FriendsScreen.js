@@ -6,27 +6,50 @@ import { SafeAreaView } from "react-navigation";
 import { FontAwesome } from '@expo/vector-icons';
 
 const FriendsScreen = () => {
-  useEffect(() => {
-    fetch(`https://randomuser.me/api/user/01`)
-          .then(results => results.json())
-          .then(data => {
-            setPackages(data);
-          });
-  })
-  const friends = [
-    {
-      name: 'Amy Farha',
-      address: '46 Coolspring Crescent'
-    },
-    {
-      name: 'Chris Jackson',
-      address: '3060 Uplands Drive'
-    },
-    {
-      name: 'Moe Jackson',
-      address: '1 Hines Road'
-    }
-  ]
+  const [friends, setFriends] = useState([]);
+
+//   const getFriends = async(userId) => {
+//     await fetch(
+//     `${baseUrl}/getUserData`,
+//     {
+//       method: "POST",
+//       body: JSON.stringify({userId: userId}),
+//       headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json'
+//       }
+//     }
+//   )
+//   .then(res => res.json())
+//   .then(response => {
+//     return response.user.name;
+//   })
+//   .catch(error => console.log(error));
+// }
+
+  // useEffect(() => {
+  //   const handleDataFetch = async () => {
+  //     await fetch(
+  //         `${baseUrl}/getUserData`,
+  //         {
+  //           method: "POST",
+  //           body: JSON.stringify({userId: '01'}),
+  //           headers: {
+  //             'Accept': 'application/json',
+  //             'Content-Type': 'application/json'
+  //           }
+  //         }
+  //       )
+  //       .then(res => res.json())
+  //       .then(response => {
+  //         console.log(response.user.friends);
+  //         setFriends(response.user.friends.map(userId => getFriends(userId)));
+  //       })
+  //       .catch(error => console.log(error));
+  //     };
+  //   handleDataFetch();
+  // }, []);
+  
   const styles = {
     addIcon: {
       alignItems: 'center',
@@ -35,7 +58,10 @@ const FriendsScreen = () => {
       height: 60,
       borderRadius: 150/2,
       backgroundColor: '#000000',
-      margin: 20
+      margin: 20,
+      marginTop: 24,
+      position: 'absolute',
+      bottom: -288
     },
     centeredView: {
       alignItems: 'center',
@@ -46,10 +72,43 @@ const FriendsScreen = () => {
   const removeFriend = (index) => {
     //let friendToRemove = friends[index];
     //REMOVE FRIEND THROUGH API CALL
+    // fetch(
+      //     `https://url.com/users,
+      //     {
+      //       method: "POST",
+      //       headers: new Headers({
+      //         Accept: "application/vnd.github.cloak-preview"
+      //       })
+      //     }
+      //   )
+      //     .then(res => res.json())
+      //     .then(response => {
+      //       setCommitHistory(response.items);
+      //       setIsLoading(false);
+      //     })
+      //     .catch(error => console.log(error));
+  }
+
+  const addFriend = () => {
+     // fetch(
+      //     `https://url.com/users,
+      //     {
+      //       method: "GET",
+      //       headers: new Headers({
+      //         Accept: "application/vnd.github.cloak-preview"
+      //       })
+      //     }
+      //   )
+      //     .then(res => res.json())
+      //     .then(response => {
+      //       setCommitHistory(response.items);
+      //       setIsLoading(false);
+      //     })
+      //     .catch(error => console.log(error));
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ marginTop: 24}}>
       {
         friends.map((friend, i) => (
           <ListItem
@@ -65,7 +124,7 @@ const FriendsScreen = () => {
       }
       <View style={styles.centeredView}>
         <View style={styles.addIcon}>
-          <FontAwesome color='#48E659' name="plus" size={45}/>
+          <FontAwesome color='#48E659' name="plus" size={45} onPress={e => addFriend()}/>
         </View>
       </View>
     </SafeAreaView>

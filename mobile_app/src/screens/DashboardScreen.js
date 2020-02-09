@@ -13,20 +13,18 @@ import { ListItem, Overlay } from "react-native-elements";
 import { FontAwesome } from "@expo/vector-icons";
 import PackageModal from "./PackageModal";
 import ToggleSwitch from "toggle-switch-react-native";
+import { fetchUpdateAsync } from "expo/build/Updates/Updates";
+
+const baseUrl = 'http://c636a574.ngrok.io'; 
 
 const getPackageStatusColour = status => {
   if (status === "Delivered") {
     return "#48E659";
-  } else if (status === "At Chillers") {
-    return "#EFED59";
-  } else if (status === "In Transit") {
+  } else if (status === "Transit") {
     return "#EF5959";
   }
-  else if (status === 'At PackageHub') {
+  else if (status === 'PackageHub') {
     return '#EFED59';
-  }
-  else if (status === 'In Transit'){
-    return '#EF5959';
   }
 }
 
@@ -38,58 +36,31 @@ const UserDashboardScreen = (props) => {
   const [isChillerMode, setChillerMode] = useState(false);
 
   const [packages, setPackages] = useState([]);
+  
+  
   useEffect(() => {
-    if (!isChillerMode) {
-      fetch(`https://randomuser.me/api/user/${props.userId}/packages`)
-          .then(results => results.json())
-          .then(data => {
-            setPackages(data);
-          });
-    }
-  })
-  const list = [
-    {
-      name: "Amy Farha",
-      address: "46 Coolspring Crescent",
-      status: "Delivered"
-    },
-    {
-      name: "Chris Jackson",
-      address: "3060 Uplands Drive",
-      status: "In Transit"
-    },
-    {
-      name: 'Moe Jackson',
-      address: '1 Hines Road',
-      status: 'At PackageHub'
-    },
-    {
-      name: "Ian Burner",
-      address: "23 Sussex Drive",
-      status: "Delivered"
-    },
-    {
-      name: "Amy Farha",
-      address: "46 Coolspring Crescent",
-      status: "Delivered"
-    },
-    {
-      name: "Chris Jackson",
-      address: "3060 Uplands Drive",
-      status: "In Transit"
-    },
-    {
-      name: 'Moe Jackson',
-      address: '1 Hines Road',
-      status: 'At PackageHub'
-    },
-    {
-      name: "Ian Burner",
-      address: "23 Sussex Drive",
-      status: "Delivered"
-    }
-  ];
-
+    const handleDataFetch = async () => {
+      await fetch(
+          `${baseUrl}/getUserData`,
+          {
+            method: "POST",
+            body: JSON.stringify({userId: '01'}),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        .then(res => res.json())
+        .then(response => {
+          setPackages(response.packages);
+        })
+        .catch(error => console.log(error));
+      };
+    handleDataFetch();
+  }, []);
+    
+  
   const styles = {
     addIcon: {
       alignItems: "center",
@@ -107,17 +78,39 @@ const UserDashboardScreen = (props) => {
     }
   }
   
-
-  
+  const getAddress = (idx) => {
+    if (packages.length != 0 && idx != null) {
+      return packages[idx].address;
+    }
+    else {
+      return null;
+    }
+  }
+  const getName = (idx) => {
+    if (packages.length != 0 && idx != null) {
+      return packages[idx].name;
+    }
+    else {
+      return null;
+    }
+  }
+  const getStatus = (idx) => {
+    if (packages.length != 0 && idx != null) {
+      return packages[idx].status;
+    }
+    else {
+      return null;
+    }
+  }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{marginTop: 24}}>
       <View style={styles.centeredView}>
       <ToggleSwitch
         isOn={isChillerMode}
         onColor="#004A8E"
         offColor="#D3200D"
-        label="In Chiller Mode"
+        label="Show My PackageHub"
         labelStyle={{ color: "black", fontWeight: "900" }}
         size="large"
         onToggle={e => setChillerMode(!isChillerMode)}
@@ -131,14 +124,14 @@ const UserDashboardScreen = (props) => {
         isVisible={isVisible}
         onBackdropPress={e => setVisibility(false)}>
         <PackageModal 
-          address={list[selectedIdx].address} //{list[selectedIdx].address}
-          name = {list[selectedIdx].name} //{list[selectedIdx].name}
-          status = {list[selectedIdx].status} //{list[selectedIdx].status}
+          address={getAddress(selectedIdx)} //{list[selectedIdx].address}
+          name = {getName(selectedIdx)} //{list[selectedIdx].name}
+          status = {getStatus(selectedIdx)} //{list[selectedIdx].status}
           isChillerMode = {isChillerMode}
         />
       </Overlay> 
       {
-        list.map((l, i) => (
+        packages.map((l, i) => (
           <ListItem
             color="#2EE0F5"
             key={i}

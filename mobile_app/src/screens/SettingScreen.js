@@ -28,7 +28,8 @@ class SettingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAvialable: false
+      isAvialable: false,
+      isChillerMode: false
     };
   }
 
@@ -42,8 +43,8 @@ class SettingScreen extends Component {
     console.log("new render");
     // console.log(this.props.addresses);
     return (
-      <SafeAreaView>
-        <Text h4>Address</Text>
+      <SafeAreaView style={{marginTop: 10}}>
+        <Text style={{fontWeight: "900" }} h4>Address</Text>
         <Divider style={{ backgroundColor: "blue" }} />
         <FlatList
           keyExtractor={(item, index) => index.toString()}
@@ -66,14 +67,25 @@ class SettingScreen extends Component {
         <View>
           <ToggleSwitch
             isOn={this.state.isAvialable}
-            onColor="green"
-            offColor="red"
+            onColor="#004A8E"
+            offColor="#D3200D"
             label="Package Hub"
             labelStyle={{ color: "black", fontWeight: "900" }}
             size="large"
             onToggle={isOn =>
               this.setState({ isAvialable: !this.state.isAvialable })
             }
+          />
+        </View>
+        <View >
+          <ToggleSwitch
+            isOn={this.state.isChillerMode}
+            onColor="#004A8E"
+            offColor="#D3200D"
+            label="In Chiller Mode"
+            labelStyle={{ color: "black", fontWeight: "900" }}
+            size="large"
+            onToggle={e => this.setState({isChillerMode: !this.state.isChillerMode})}
           />
         </View>
       </SafeAreaView>
