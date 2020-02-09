@@ -1,5 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+
+// import { initStore } from "./redux/store";
+import { initStore } from "./src/store";
+import { Provider } from "react-redux";
+
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
@@ -11,13 +16,15 @@ import UserDashboardScreen from "./src/screens/DashboardScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import FriendsScreen from "./src/screens/FriendsScreen";
 
+import { NavigationContainer } from "react-navigation";
+
 const AppFlow = createBottomTabNavigator(
   {
     Friends: {
       screen: FriendsScreen,
       navigationOptions: {
         tabBarLabel: "Friends",
-        tabBarIcon: ({tintColor}) => <Feather name="user" size={30}/>
+        tabBarIcon: ({ tintColor }) => <Feather name="user" size={30} />
       }
     },
     Dashboard: {
@@ -40,11 +47,12 @@ const AppFlow = createBottomTabNavigator(
 );
 
 const SignInFlow = createSwitchNavigator({
-  SigneIn: SignInScreen,
+  // SigneIn: SignInScreen,
   AppFlow: AppFlow
 });
 
 const App = createAppContainer(SignInFlow);
+const store = initStore();
 
 const styles = StyleSheet.create({
   container: {
@@ -56,5 +64,9 @@ const styles = StyleSheet.create({
 });
 
 export default function() {
-  return <App />;
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 }
