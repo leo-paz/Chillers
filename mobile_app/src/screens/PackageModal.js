@@ -149,7 +149,7 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
               //containerStyle={{alignItems: 'center', justifyContent: 'center'}}
               titleStyle={{ fontWeight: 'bold' }}
             />}
-            subtitle={<Text style={{ fontWeight: 'bold', textAlign: 'center'}}>{l.address}</Text>}
+            subtitle={<Text style={{ fontWeight: 'bold', textAlign: 'center'}}>{l.name}</Text>}
             onPress={e => {handleAddressChange(i)}}
           />
         ))

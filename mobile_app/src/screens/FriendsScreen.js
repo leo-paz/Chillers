@@ -5,50 +5,36 @@ import { SafeAreaView } from "react-navigation";
 
 import { FontAwesome } from '@expo/vector-icons';
 
+const baseUrl = 'http://c636a574.ngrok.io';
+
 const FriendsScreen = () => {
   const [friends, setFriends] = useState([]);
 
-//   const getFriends = async(userId) => {
-//     await fetch(
-//     `${baseUrl}/getUserData`,
-//     {
-//       method: "POST",
-//       body: JSON.stringify({userId: userId}),
-//       headers: {
-//         'Accept': 'application/json',
-//         'Content-Type': 'application/json'
-//       }
-//     }
-//   )
-//   .then(res => res.json())
-//   .then(response => {
-//     return response.user.name;
-//   })
-//   .catch(error => console.log(error));
-// }
+  useEffect(() => {
+  const handleDataFetch = async () => {
+    await fetch(
+        `${baseUrl}/getUserData`,
+        {
+          method: "POST",
+          body: JSON.stringify({userId: '01'}),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      .then(res => res.json())
+      .then(response => {
+        console.log(response.friends);
+        setFriends(response.packages[0].possibleDestinations);
+      })
+      .then(() => {
 
-  // useEffect(() => {
-  //   const handleDataFetch = async () => {
-  //     await fetch(
-  //         `${baseUrl}/getUserData`,
-  //         {
-  //           method: "POST",
-  //           body: JSON.stringify({userId: '01'}),
-  //           headers: {
-  //             'Accept': 'application/json',
-  //             'Content-Type': 'application/json'
-  //           }
-  //         }
-  //       )
-  //       .then(res => res.json())
-  //       .then(response => {
-  //         console.log(response.user.friends);
-  //         setFriends(response.user.friends.map(userId => getFriends(userId)));
-  //       })
-  //       .catch(error => console.log(error));
-  //     };
-  //   handleDataFetch();
-  // }, []);
+      })
+      .catch(error => console.log(error));
+    };
+  handleDataFetch();
+}, []);
   
   const styles = {
     addIcon: {
