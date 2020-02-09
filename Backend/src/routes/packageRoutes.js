@@ -74,11 +74,4 @@ router.get(`/user/${userID}/removeFriend/${friend}`, async (req, res) => {
   return res.send();
 });
 
-
-
-// router.get(`/user/${userID}/changeAddress/${address}`, async (req, res) => {
-//   await dbFunctions.updateAddress(`${userID}`, address);
-//   return res.send();
-// });
-
 module.exports = router;

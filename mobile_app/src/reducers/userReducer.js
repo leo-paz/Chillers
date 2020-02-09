@@ -15,8 +15,6 @@ const userReducer = (
       }
       let newAddys = [...new_state.addresses];
       newAddys.push(action.payload);
-      console.log("TPOOOOOO: ");
-      console.log({ ...state, addresses: newAddys });
       return { ...state, addresses: newAddys };
     }
     default:
