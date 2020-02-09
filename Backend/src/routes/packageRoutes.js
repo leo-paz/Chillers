@@ -127,7 +127,6 @@ router.post("/updatePackageLocation", async (req, res) => {
   }
   package.save;
 
-
   // let newDest = [];
 
   // for (let i = 0; i < posDest.length; i++) {
@@ -151,6 +150,32 @@ router.post("/updatePackageLocation", async (req, res) => {
   return res.send({ package });
   // package.possibleDestinations;
 });
+
+router.post(`/getFriends`, (req, res) => {
+  // const { userId } = req.body;
+  // console.log(userId);
+  // const user = await User.findOne({ userId: userId });
+
+  // let friends = [];
+  // let friend = null;
+  // console.log(user.friends);
+  // user.friends.forEach(async elem => {
+  //   friend = await User.findOne({ userId: elem });
+  //   friends.push({ name: friend.name, address: friend.address });
+  // });
+  const friends = [
+    {
+      name: "Kevin",
+      address: "3060 Uplands Dr"
+    },
+    {
+      name: "Moe",
+      address: "310 sandhill rd"
+    }
+  ];
+  return res.send({ friendsList: friends });
+});
+
 // router.get(`/packages/${packageID}/`, async (req, res) => {
 //   // let packages = await dbFunctions.getPackageById(`${packageID}`);
 //   packageName
