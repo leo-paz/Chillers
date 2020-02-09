@@ -1,3 +1,4 @@
+
 // export GOOGLE_APPLICATION_CREDENTIALS = "/home/user/Desktop/service-account-file.json"
 var serviceAccount = require("./service-account-file.json");
 const { Firestore } = require('@google-cloud/firestore');
