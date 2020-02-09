@@ -89,21 +89,12 @@ const UserDashboardScreen = () => {
       padding: 10
     }
   }
+  let packages;
+
+  
 
   return (
     <SafeAreaView>
-<<<<<<< 4e796f401d22090349a8451e0fb80758dd187e3e
-      <Text>DashboardScreen</Text>
-      <View style={styles.container}>
-        {/*
-          <FlatList
-            data={packages}
-            renderItem={({ item }) => (
-              <Text style={styles.item}>{item.name}</Text>
-          )}
-        />
-        */}
-=======
       <View style={styles.centeredView}>
       <ToggleSwitch
         isOn={isChillerMode}
@@ -114,19 +105,19 @@ const UserDashboardScreen = () => {
         size="large"
         onToggle={e => setChillerMode(!isChillerMode)}
       />
->>>>>>> one commit
       </View>
       <ScrollView>
 
       <Overlay
         //width={Math.round(Dimensions.get('window').height) - 100}
-        height={Math.round(Dimensions.get('window').width) - 100}
+        //height={Math.round(Dimensions.get('window').width) - 100}
         isVisible={isVisible}
         onBackdropPress={e => setVisibility(false)}>
         <PackageModal 
           address={list[selectedIdx].address} //{list[selectedIdx].address}
           name = {list[selectedIdx].name} //{list[selectedIdx].name}
           status = {list[selectedIdx].status} //{list[selectedIdx].status}
+          isChillerMode = {isChillerMode}
         />
       </Overlay> 
       {
@@ -148,19 +139,4 @@ const UserDashboardScreen = () => {
   );
 };
 
-<<<<<<< 4e796f401d22090349a8451e0fb80758dd187e3e
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 22
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44
-  }
-});
-
-=======
->>>>>>> one commit
 export default UserDashboardScreen;
