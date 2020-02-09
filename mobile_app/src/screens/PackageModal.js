@@ -16,23 +16,27 @@ import { FontAwesome } from '@expo/vector-icons';
 const addresses = [
   {
     name: 'suzie',
-    address: '24 buttfuck nowhere',
+    address: '24 Hazeldean Road',
     distance: '4',
   },
   {
-    name: 'suzie',
-    address: '24 buttfuck nowhere',
+    name: 'john',
+    address: '24 Sussex Drive',
     distance: '4'
   },
   {
-    name: 'suzie',
-    address: 'asdfasdf',
+    name: 'buck',
+    address: '46 Coolspring Crescent',
     distance: '4'
   }
 ]
 
+const baseUrl = 'http://c636a574.ngrok.io';
+
+
+
 const getAvailableAddresses = () => {
-  return addresses;
+  
 }
 
 const handleAddressChange = index => {
@@ -41,25 +45,44 @@ const handleAddressChange = index => {
 
 
 const PackageModal = ({name, address, status, isChillerMode}) => {
-    const butStyle = StyleSheet.create({
-        buttonStyle: {
-            color: 'red',
-            marginTop: 10,
-            backgroundColor: 'blue'
-        }
-    })
+  const [destinations, setDestinations] = useState([]);
+  useEffect(() => {
+    const handleDataFetch = async () => {
+      await fetch(
+          `${baseUrl}/getUserData`,
+          {
+            method: "POST",
+            body: JSON.stringify({userId: '01'}),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        .then(res => res.json())
+        .then(response => {
+          console.log(response.packages[0].possibleDestinations[0].street);
+          setDestinations(response.packages[0].possibleDestinations);
+        })
+        .catch(error => console.log(error));
+      };
+    handleDataFetch();
+  }, []);
 
     const viewStyles = StyleSheet.create ({
       centeredView: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
       }
     });
     
     const styles = StyleSheet.create({
         yellowTitle: {
           ...human.title3Object,
-          color: iOSColors.red,
+          color: iOSColors.black,
+          textAlign: 'center',
+          justifyContent: 'center',
         }
       });
     handleGetDirections = () => {
@@ -86,7 +109,8 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
         getDirections(data)
     }
     let button;
-    if (status === "In Transit" && isChillerMode) {
+    let mapButton;
+    if (status === "Transit" && isChillerMode) {
       button = <Button
         title="Scan QR"
         buttonStyle={{
@@ -101,7 +125,7 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
       />
       mapButton = <Text></Text>
     }
-    else if (status === "In Transit" && !isChillerMode) {
+    else if (status === "Transit" && !isChillerMode) {
       
       let availAddresses = getAvailableAddresses();
       
@@ -109,13 +133,13 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
       <View style={viewStyles.centeredView}>
       <Text style={{fontWeight: 'bold', fontSize: 25}}>Change Location</Text>
       {
-        availAddresses.map((l, i) => (
+        destinations.map((l, i) => (
           <ListItem
             style={viewStyles.centeredView}
             color="#2EE0F5"
             key={i}
             title={<Button
-              title={l.name}
+              title={l.street}
               buttonStyle={{
                 backgroundColor: 'black',
                 borderWidth: 2,
@@ -125,7 +149,7 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
               //containerStyle={{alignItems: 'center', justifyContent: 'center'}}
               titleStyle={{ fontWeight: 'bold' }}
             />}
-            subtitle={<Text style={{ fontWeight: 'bold'}}>{l.address}</Text>}
+            subtitle={<Text style={{ fontWeight: 'bold', textAlign: 'center'}}>{l.name}</Text>}
             onPress={e => {handleAddressChange(i)}}
           />
         ))
@@ -135,7 +159,7 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
       
       mapButton = <Text></Text>
     }
-    else if (status === "At Chillers" && !isChillerMode) {
+    else if (status === "PackageHub" && !isChillerMode) {
         button = <Button
         title="Scan QR"
         buttonStyle={{
@@ -165,7 +189,6 @@ const PackageModal = ({name, address, status, isChillerMode}) => {
         button = <Text></Text>
         mapButton = <Text></Text>
     }
-    
     
     return (
         //TODO: ADD PACKAGE INFO IN PROPS AND DISPLAY PACKAGE INFO IN TEXT

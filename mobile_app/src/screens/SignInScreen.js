@@ -4,9 +4,9 @@ import { Text, View, Button, TouchableOpacity, SafeAreaView } from "react-native
 const SignIn = ({ navigation }) => {
   const {navigate} = navigation;
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{paddingTop: 50}}>
       <Text>Sign In Screen</Text>
-      <Button title="SignIn" onPress={ () => navigate("AppFlow")} />
+      <Button title="Sign In" onPress={ () => navigate("AppFlow")} />
     </SafeAreaView>
   );
 };
