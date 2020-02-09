@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const Address = require('./Address');
+// const packageSchema = require ('./Packages');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -15,6 +17,20 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true
+  },
+  packages: {
+    type: Array
+  },
+  // packages: packageSchema,
+  friends: {
+    type: Array
+  },
+  userId: {
+    type: String
+  },
+  address: Address,
+  isChiller: {
+    type: Boolean
   }
 });
 
