@@ -1,8 +1,7 @@
 const express = require("express");
-const request = require('request')
+const request = require("request");
 
 // var dbFunctions = require("../../../db/index");
-
 
 const mongoose = require("mongoose");
 
@@ -34,19 +33,18 @@ const getShippingAddress = () => {
 };
 
 const clientHelper = {
-  make_API_call : function(url){
-      return new Promise((resolve, reject) => {
-          request(url, { json: true }, (err, res, body) => {
-            if (err) reject(err)
-            resolve(body)
-          });
-      })
+  make_API_call: function(url) {
+    return new Promise((resolve, reject) => {
+      request(url, { json: true }, (err, res, body) => {
+        if (err) reject(err);
+        resolve(body);
+      });
+    });
   }
-}
-
+};
 
 const getUserDestinations = async (user, packgeLocation) => {
-  const friend = await User.findOne({userId: user.friends[0]});
+  const friend = await User.findOne({ userId: user.friends[0] });
   // const user = await User.findOne({ email });
 
   let addresses = [];
@@ -54,13 +52,13 @@ const getUserDestinations = async (user, packgeLocation) => {
   addresses.push(friend.address);
 
   console.log(user.userId);
-  
+
   const url = `https://uottawahack3.appspot.com/nearest_chiller/${user.userId}/`;
   const res = await clientHelper.make_API_call(url);
   const url2 = `https://uottawahack3.appspot.com/find_lon_lat/${res.id}/`;
   const res2 = await clientHelper.make_API_call(url2);
-  addresses.push({...res, res2 });
-  
+  addresses.push({ ...res, res2 });
+
   return addresses;
 };
 // create New Package
@@ -92,13 +90,13 @@ router.post("/addPackage", async (req, res) => {
   res.send({ package });
 });
 
-router.post('/getUserData', async (req, res) => {
-  const {userId} = req.body;
-  const user = await User.findOne({userId: userId});
-  const packages = await Package.find({recepient: userId});
+router.post("/getUserData", async (req, res) => {
+  const { userId } = req.body;
+  const user = await User.findOne({ userId: userId });
+  const packages = await Package.find({ recepient: userId });
 
-  return res.send({user, packages});
-})
+  return res.send({ user, packages });
+});
 // updateLocation
 router.post(`/packages/updateLocation/`, (req, res) => {
   const { name } = req.body;
@@ -107,6 +105,52 @@ router.post(`/packages/updateLocation/`, (req, res) => {
   packageId;
 });
 
+router.post("/updatePackageLocation", async (req, res) => {
+  const { name, reason, newLocation } = req.body;
+  const package = await Package.find({ name: name });
+  // console.log(package);
+  // const posDest = [...package.possibleDestinations];
+  const posDest = [];
+  console.log(package);
+  // for (var i = 0; i < package.possibleDestinations.length; i++) {
+  //   posDest.push(package.possibleDestinations[i]);
+  // }
+  // res.send({ posDest });
+
+  // package.currentLocation;
+  if (reason === "country") {
+    package.currentLocation.country = newLocation;
+  } else if (reason === "province") {
+    package.currentLocation.province = newLocation;
+  } else {
+    package.currentLocation.city = newLocation;
+  }
+  package.save;
+
+
+  // let newDest = [];
+
+  // for (let i = 0; i < posDest.length; i++) {
+  //   if (!posDest[i].city) continue;
+
+  //   if (reason === "country") {
+  //     if (posDest[i].country === newLocation) {
+  //       newDest.push(posDest[i]);
+  //     }
+  //   } else if (reason === "province") {
+  //     if (posDest[i].province === newLocation) {
+  //       newDest.push(posDest[i]);
+  //     }
+  //   } else {
+  //     if (posDest[i].city === newLocation) {
+  //       newDest.push(posDest[i]);
+  //     }
+  //   }
+  // }
+
+  return res.send({ package });
+  // package.possibleDestinations;
+});
 // router.get(`/packages/${packageID}/`, async (req, res) => {
 //   // let packages = await dbFunctions.getPackageById(`${packageID}`);
 //   packageName

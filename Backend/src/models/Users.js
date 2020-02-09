@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   address: Address,
+  currentLocation: Address,
   isChiller: {
     type: Boolean
   }
